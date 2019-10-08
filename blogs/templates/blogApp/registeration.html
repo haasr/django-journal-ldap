@@ -3,7 +3,7 @@
   <div class="jumbotron">
     <div class="container">
       {% if registered %}
-        <h1>You are registered</h1>
+        <h1>You are registered. <a href="{% url 'blogApp:user_login' %}">Click here</a> to login </h1>
       {% else %}
       <form method="post">
           {% csrf_token %}

@@ -1,6 +1,11 @@
 {% extends "blogApp/base.html" %}
 {% block body_block %}
-  <div class="jumbotron">
-    <h1>Index</h1>
+ <style>
+   div[name = "indexDiv"]{
+     color: red;
+   }
+ </style>
+  <div class="jumbotron" name="indexDiv">
+    <h1>Your Journal <u>Register and Login</u> to get started! <a href="{% url 'blogApp:register' %}">Click Here</a> to get started. </h1>
   </div>
 {% endblock %}
