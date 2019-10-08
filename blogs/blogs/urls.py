@@ -22,4 +22,5 @@ urlpatterns = [
     url(r'^$', views.index, name='index'),
     path('admin/', admin.site.urls),
     url(r'^blogApp/', include('blogApp.urls')),
+    url(r'^logout/$', views.user_logout,name='logout'),
 ]

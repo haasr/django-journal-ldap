@@ -2,5 +2,15 @@
 {% block body_block %}
   <div class="jumbotron">
     <h1>login</h1>
+    <form action="{% url 'blogApp:user_login' %}" method="POST">
+      {% csrf_token %}
+      <label for="username">username:</label>
+      <input type="text" name="username" placeholder="Enter username">
+
+      <label for="password">password: </label>
+      <input type="text" name="password" placeholder="Enter password">
+
+      <input type="submit">
+    </form>
   </div>
 {% endblock %}
