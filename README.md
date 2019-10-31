@@ -1,5 +1,5 @@
 # django-journal
-This project is about making a journal web app which will allow different users to keep an journal about whatever they like. It allows the user to register and login to their own account and keep their journal.\
+This project is about making a journal web app which will allow different users to keep an journal about whatever they like. It allows the user to register and login to their own account and keep their journal.
 
 
 Step 1: Install conda and python and make a virtual environment of django. for windows use command "conda create --name myenv django".\
