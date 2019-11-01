@@ -12,3 +12,6 @@ class journalModel(models.Model):
     userIdInt = models.IntegerField(default=None, null=True)
     datetime = models.DateTimeField(default=timezone.now)
     journalEntry = models.CharField(max_length=2000, null=False)
+
+    def __str__(self):
+        return str(userIdInt)

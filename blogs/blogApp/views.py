@@ -1,15 +1,21 @@
 from django.shortcuts import render,redirect
 from django.urls import reverse
+from blogApp.helperFunc import helpers
 from . import forms
-from blogApp.models import journalModel
+from blogApp.models import journalModel,userModel
 from django.contrib.auth import authenticate,login,logout
 from django.http import HttpResponseRedirect, HttpResponse
 from django.urls import reverse
 from django.contrib.auth.decorators import login_required
 
+# tring to get username from the user login view and than use it to query database to 
+# get the data of that particular user and than will show it o the main screen
 
 def index(request):
-    return render(request, 'blogApp/index.html')
+    data = userModel.objects.all().values()
+    print("helpers.id")
+    print(helpers.userId)
+    return render(request, 'blogApp/index.html',{'data':data})
 
 def register(request):
     registered = False
@@ -38,6 +44,7 @@ def user_login(request):
     if request.method == 'POST':
         username = request.POST.get('username')
         password = request.POST.get('password')
+        print(request.POST.get('username'))
 
         user = authenticate(username = username, password=password)
 
@@ -45,12 +52,13 @@ def user_login(request):
             print("user sutheticated")
             if user.is_active:
                 login(request,user)
+                helpers.userId = request.POST.get('username')
                 print("login successfull")
                 return HttpResponseRedirect(reverse('index'))
             else:
                 return HttpResponse("Account not active")
         else:
-            return HttpResponse("invalid login details supplied!")
+            return HttpResponse("invalid login detailids supplied!")
     else:
         return render(request, 'blogApp/login.html')
         
@@ -59,6 +67,7 @@ def user_logout(request):
     logout(request)
     return HttpResponseRedirect(reverse('index'))
 
+@login_required
 def blogView(request):
     form = forms.journalForm()
     if request.method == "POST":
