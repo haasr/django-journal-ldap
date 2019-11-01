@@ -1,6 +1,7 @@
-from django.shortcuts import render
+from django.shortcuts import render,redirect
+from django.urls import reverse
 from . import forms
-
+from blogApp.models import journalModel
 from django.contrib.auth import authenticate,login,logout
 from django.http import HttpResponseRedirect, HttpResponse
 from django.urls import reverse
@@ -57,3 +58,24 @@ def user_login(request):
 def user_logout(request):
     logout(request)
     return HttpResponseRedirect(reverse('index'))
+
+def blogView(request):
+    form = forms.journalForm()
+    if request.method == "POST":
+        form = forms.journalForm(request.POST)
+        if form.is_valid():
+            form.save()
+            data = journalModel.objects.all()
+            for entry in data:
+                x=str(entry.userId)
+                y=int(x)
+                entry.userIdInt = y
+                entry.save()
+            form = forms.journalForm()
+            return redirect(reverse('index'))
+            print("journal form validation success")
+        else:
+            print("journal form validation failed")
+
+    return render(request, 'blogApp/blog.html', {'form':form})
+
