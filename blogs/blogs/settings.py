@@ -154,8 +154,8 @@ AUTH_LDAP_GROUP_SEARCH = LDAPSearch(
 AUTH_LDAP_GROUP_TYPE = PosixGroupType(name_attr='CN')
 
 AUTH_LDAP_USER_FLAGS_BY_GROUP = {
-    'is_staff': 'cn=django-admins,ou=groups,dc=toothyboi,dc=com',
-    'is_superuser': 'cn=django-admins,ou=groups,dc=toothyboi,dc=com',
+    'is_staff': 'cn=django-staff,ou=groups,dc=toothyboi,dc=com',
+    'is_superuser': 'cn=django-superusers,ou=groups,dc=toothyboi,dc=com',
 }
 
 AUTH_LDAP_FIND_GROUP_PERMS = True
