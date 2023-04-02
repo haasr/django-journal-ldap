@@ -8,7 +8,7 @@ from django.http import HttpResponseRedirect, HttpResponse
 from django.urls import reverse
 from django.contrib.auth.decorators import login_required
 
-# tring to get username from the user login view and than use it to query database to 
+# tring to get username from the user login view and than use it to query database to
 # get the data of that particular user and than will show it o the main screen
 
 def index(request):
@@ -46,7 +46,7 @@ def user_login(request):
         password = request.POST.get('password')
         print(request.POST.get('username'))
 
-        user = authenticate(username = username, password=password)
+        user = authenticate(username=username, password=password)
 
         if user:
             print("user sutheticated")
@@ -61,7 +61,7 @@ def user_login(request):
             return HttpResponse("invalid login detailids supplied!")
     else:
         return render(request, 'blogApp/login.html')
-        
+
 @login_required
 def user_logout(request):
     logout(request)

@@ -1,10 +1,10 @@
-from django.conf.urls import url
+from django.urls import re_path
 from blogApp import views
 
 app_name = 'blogApp'
 
 urlpatterns=[
-    url(r'^register/$', views.register,name='register'),
-    url(r'^user_login/$', views.user_login,name='user_login'),
-    url(r'^blog/', views.blogView, name='blogViewUrl')
+    re_path(r'^register/$', views.register,name='register'),
+    re_path(r'^user_login/$', views.user_login,name='user_login'),
+    re_path(r'^blog/', views.blogView, name='blogViewUrl')
 ]
