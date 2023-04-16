@@ -14,7 +14,7 @@ class GroupLDAPBackend(LDAPBackend):
 
     "GROUP_REGEX": re.compile(r"\^*django.*"),
     "GROUP_SEARCH": LDAPSearch(
-        "OU=groups, DC=toothyboi, DC=com",
+        "OU=groups, DC=tak, DC=etsu, DC=edu",
         ldap.SCOPE_SUBTREE,
         "(cn=*django)",
     ),
@@ -24,7 +24,7 @@ class GroupLDAPBackend(LDAPBackend):
     "BIND_DN": "",
     "BIND_PASSWORD": "",
     "USER_SEARCH": LDAPSearch(
-      "OU=people, DC=toothyboi, DC=com",
+      "OU=people, DC=tak, DC=etsu, DC=edu",
       # If you know, that all your users logging in are on that
       # exact ou depth specified above, you can get better performance
       # by using ldap.SCOPE_BASE or for that depth and its direct
