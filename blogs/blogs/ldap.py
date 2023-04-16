@@ -49,7 +49,7 @@ class GroupLDAPBackend(LDAPBackend):
 
     ldap_groups = ldap_user.group_names
     print("FFFFFFFFFFFFFFFFFFFFFFFFFFFFFFF")
-    print(dir(ldap_user)
+    print(dir(ldap_user))
     print("FFFFFFFFFFFFFFFFFFFFFFFFFFFFFFF")
     ldap_groups = {x for x in ldap_groups if not self.settings.GROUP_REGEX.match(x)}
     print(ldap_groups)
