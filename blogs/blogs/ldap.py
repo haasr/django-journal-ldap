@@ -12,7 +12,7 @@ class GroupLDAPBackend(LDAPBackend):
     "SERVER_URI": "ldap://ldappi.local",
     "CACHE_TIMEOUT": 240,
 
-    "GROUP_REGEX": re.compile(r"\^*tak.*"),
+    "GROUP_REGEX": re.compile(r"\^*django.*"),
     "GROUP_SEARCH": LDAPSearch(
         "OU=groups, DC=toothyboi, DC=com",
         ldap.SCOPE_SUBTREE,
@@ -48,7 +48,10 @@ class GroupLDAPBackend(LDAPBackend):
     user.save()
 
     ldap_groups = ldap_user.group_names
-    ldap_groups = {x for x in ldap_groups if self.settings.GROUP_REGEX.match(x)}
+    print("FFFFFFFFFFFFFFFFFFFFFFFFFFFFFFF")
+    print(dir(ldap_user)
+    print("FFFFFFFFFFFFFFFFFFFFFFFFFFFFFFF")
+    ldap_groups = {x for x in ldap_groups if not self.settings.GROUP_REGEX.match(x)}
     print(ldap_groups)
 
     if len(ldap_groups) == 0:
