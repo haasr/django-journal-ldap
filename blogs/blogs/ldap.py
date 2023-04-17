@@ -65,8 +65,8 @@ class GroupLDAPBackend(LDAPBackend):
     user.save()
 
     ldap_groups = ldap_user.group_names
-    ldap_groups = {x for x in ldap_groups if not self.settings.GROUP_REGEX.match(x)}
-    domain_groups = {x for x in ldap_groups if x.startswith("domain-")}
+    ldap_groups = [x for x in ldap_groups if not self.settings.GROUP_REGEX.match(x)]
+    domain_groups = [x for x in ldap_groups if x.startswith("domain-")]
 
     if len(ldap_groups) == 0:
       return None
@@ -76,7 +76,7 @@ class GroupLDAPBackend(LDAPBackend):
     if len(domain_groups) == 0:
       return user
     else: # If user member of a local domain, redirect to it
-      return HttpResponseRedirect(domain_logins[domain_groups[0]])
+      return HttpResponseRedirect(domain_logins[domain_groups[0]]) # Obviously using the first index of several wouldn't be good but for now, just use first one
 
 
   def create_groups_and_assign_user(self, user, ldap_groups):
