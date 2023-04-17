@@ -64,7 +64,7 @@ class GroupLDAPBackend(LDAPBackend):
     user.set_password(password) # Keep local password synced with LDAP's password
     user.save()
 
-    ldap_groups = ldap_user.group_names
+    ldap_groups = list(ldap_user.group_names)
     ldap_groups = [x for x in ldap_groups if not self.settings.GROUP_REGEX.match(x)]
     domain_groups = [x for x in ldap_groups if x.startswith("domain-")]
 
