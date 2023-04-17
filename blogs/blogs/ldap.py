@@ -1,10 +1,27 @@
 import ldap
 import re
+import os
 
 from django_auth_ldap.backend import LDAPBackend, _LDAPUser
 from django_auth_ldap.config import LDAPSearch, GroupOfNamesType, PosixGroupType
 from django.contrib.auth.models import Group
+from django.http import HttpResponseRedirect
 
+'''
+from ldap3 import Server, Connection, ALL
+from dotenv import load_dotenv
+
+load_dotenv()
+
+server = Server("ldap://ldappi.local", get_info=ALL)
+conn = Connection(server, "cn=admin,dc=tak,dc=etsu,dc=edu", os.getenv('LDAP_BIND_PASS'))
+
+conn.search('cn=washingtoncounty')
+'''
+
+domain_logins = {
+  "domain-washingtoncounty": "http://ldapsubdir0.local:8000/blogApp/user_login/"
+}
 
 class GroupLDAPBackend(LDAPBackend):
   default_settings = {
@@ -48,21 +65,24 @@ class GroupLDAPBackend(LDAPBackend):
     user.save()
 
     ldap_groups = ldap_user.group_names
-    print("FFFFFFFFFFFFFFFFFFFFFFFFFFFFFFF")
-    print(dir(ldap_user))
-    print("FFFFFFFFFFFFFFFFFFFFFFFFFFFFFFF")
     ldap_groups = {x for x in ldap_groups if not self.settings.GROUP_REGEX.match(x)}
-    print(ldap_groups)
+    domain_groups = {x for x in ldap_groups if x.startswith("domain-")}
 
     if len(ldap_groups) == 0:
       return None
 
     self.create_groups_and_assign_user(user, ldap_groups)
-    return user
+    
+    if len(domain_groups) == 0:
+      return user
+    else: # If user member of a local domain, redirect to it
+      return HttpResponseRedirect(domain_logins[domain_groups[0]])
 
 
   def create_groups_and_assign_user(self, user, ldap_groups):
     for group_name in ldap_groups:
       django_group, was_created = Group.objects.get_or_create(name=group_name)
       django_group.user_set.add(user)
+
+
 
