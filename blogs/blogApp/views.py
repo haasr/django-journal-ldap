@@ -46,12 +46,13 @@ def user_login(request):
         password = request.POST.get('password')
         print(request.POST.get('username'))
 
-        user = authenticate(username=username, password=password)
-
-        if user:
-            print("user sutheticated")
-            if user.is_active:
-                login(request,user)
+        response = authenticate(username=username, password=password)
+        if isinstance(response, HttpResponseRedirect):
+            return response
+        elif response:
+            print("user autheticated")
+            if response.is_active:
+                login(request, response)
                 helpers.userId = request.POST.get('username')
                 print("login successfull")
                 return HttpResponseRedirect(reverse('index'))
