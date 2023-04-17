@@ -31,8 +31,7 @@ SECRET_KEY = '70f=xn56^76!!04x-0bvc52(5n=^6is*t&l-@c+@4h1an2awxs'
 DEBUG = True
 
 ALLOWED_HOSTS = [
-  "192.168.1.209",
-  "ldapclient1.local",
+  "ldapsubdir0.local",
 ]
 
 
@@ -131,9 +130,9 @@ LOGIN_URL = '/basic_app/user_login'
 
 
 # Baseline configuration.
-AUTH_LDAP_SERVER_URI = "ldap://ldappi.local:389"
+AUTH_LDAP_SERVER_URI = "ldap://ldapsubdir0.local:389"
 
-AUTH_LDAP_BIND_DN = "cn=admin,dc=toothyboi,dc=com"
+AUTH_LDAP_BIND_DN = "cn=admin,dc=tak,dc=washingtoncounty,dc=com"
 AUTH_LDAP_BIND_PASSWORD = os.getenv('LDAP_BIND_PASS')
 AUTHENTICATION_BACKENDS = (
     "blogs.ldap.GroupLDAPBackend",
@@ -147,16 +146,11 @@ AUTH_LDAP_USER_ATTR_MAP = {
 }
 
 AUTH_LDAP_GROUP_SEARCH = LDAPSearch(
-    "ou=groups,dc=toothyboi,dc=com",
+    "ou=groups,dc=tak,dc=washingtoncounty,dc=com",
     ldap.SCOPE_SUBTREE, "(objectClass=posixGroup)"
 )
 
 AUTH_LDAP_GROUP_TYPE = PosixGroupType(name_attr='CN')
-
-AUTH_LDAP_USER_FLAGS_BY_GROUP = {
-    'is_staff': 'cn=django-staff,ou=groups,dc=toothyboi,dc=com',
-    'is_superuser': 'cn=django-superusers,ou=groups,dc=toothyboi,dc=com',
-}
 
 AUTH_LDAP_FIND_GROUP_PERMS = True
 

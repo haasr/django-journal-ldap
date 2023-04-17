@@ -9,12 +9,12 @@ from django.contrib.auth.models import Group
 class GroupLDAPBackend(LDAPBackend):
   default_settings = {
     # All those settings are overwriting base class values
-    "SERVER_URI": "ldap://ldappi.local",
+    "SERVER_URI": "ldap://ldapsubdir0.local",
     "CACHE_TIMEOUT": 240,
 
     "GROUP_REGEX": re.compile(r"\^*tak.*"),
     "GROUP_SEARCH": LDAPSearch(
-        "OU=groups, DC=toothyboi, DC=com",
+        "OU=groups, DC=tak, DC=washingtoncounty, DC=com",
         ldap.SCOPE_SUBTREE,
         "(cn=*django)",
     ),
@@ -24,7 +24,7 @@ class GroupLDAPBackend(LDAPBackend):
     "BIND_DN": "",
     "BIND_PASSWORD": "",
     "USER_SEARCH": LDAPSearch(
-      "OU=people, DC=toothyboi, DC=com",
+      "OU=people, DC=tak, DC=washingtoncounty, DC=com",
       # If you know, that all your users logging in are on that
       # exact ou depth specified above, you can get better performance
       # by using ldap.SCOPE_BASE or for that depth and its direct
