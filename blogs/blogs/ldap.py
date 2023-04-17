@@ -76,6 +76,8 @@ class GroupLDAPBackend(LDAPBackend):
     if len(domain_groups) == 0:
       return user
     else: # If user member of a local domain, redirect to it
+      print("> User belongs to another domain")
+      print(f"> Redirect user to {domain_logins[domain_groups[0]]}")
       return HttpResponseRedirect(domain_logins[domain_groups[0]]) # Obviously using the first index of several wouldn't be good but for now, just use first one
 
 
